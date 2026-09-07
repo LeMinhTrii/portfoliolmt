@@ -177,14 +177,7 @@
         );
         box-shadow: 0 14px 36px rgba(255, 79, 216, 0.28);
       }
-      .mark:before {
-        content: "";
-        width: 20px;
-        height: 20px;
-        border: 2px solid #fff;
-        border-radius: 6px;
-        transform: rotate(45deg);
-      }
+
       .links {
         display: flex;
         align-items: center;
@@ -889,6 +882,242 @@
         font-size: 14px;
         font-weight: 600;
       }
+
+      /* ===== PROJECT SHOWCASE - 3 GROUPS ===== */
+      .project-showcase {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 18px;
+        align-items: start;
+      }
+
+      .project-group {
+        border: 1px solid var(--line);
+        border-radius: 28px;
+        background:
+          radial-gradient(
+            circle at 88% 6%,
+            rgba(124, 92, 255, 0.16),
+            transparent 32%
+          ),
+          radial-gradient(
+            circle at 14% 22%,
+            rgba(255, 79, 216, 0.1),
+            transparent 28%
+          ),
+          var(--glass);
+        backdrop-filter: blur(20px);
+        box-shadow: 0 24px 72px rgba(0, 0, 0, 0.2);
+        padding: 18px;
+        overflow: hidden;
+      }
+
+      .project-group-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 16px;
+      }
+
+      .project-group-title {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        min-width: 0;
+      }
+
+      .project-group-icon {
+        width: 50px;
+        height: 50px;
+        flex: 0 0 50px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--primary), var(--pink));
+        box-shadow: 0 14px 32px rgba(124, 92, 255, 0.24);
+        font-size: 22px;
+        font-weight: 800;
+      }
+
+      .project-group h3 {
+        font-size: 20px;
+        line-height: 1.1;
+        margin-bottom: 6px;
+      }
+
+      .project-group-head p {
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1.5;
+        font-weight: 600;
+      }
+
+      .project-count {
+        padding: 8px 12px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--muted);
+        white-space: nowrap;
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 0.4px;
+      }
+
+      .showcase-list {
+        display: grid;
+        gap: 10px;
+      }
+
+      .showcase-item {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 56px 1fr;
+        align-items: center;
+        gap: 12px;
+        padding: 10px 12px;
+        border: 1px solid rgba(255, 255, 255, 0.11);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.05);
+        color: #fff;
+        text-align: left;
+        font: inherit;
+        cursor: pointer;
+        transition: 0.25s ease;
+      }
+
+      .showcase-item:hover {
+        transform: translateY(-3px);
+        border-color: rgba(255, 255, 255, 0.25);
+        background: rgba(255, 255, 255, 0.085);
+        box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+      }
+
+      .showcase-thumb {
+        width: 56px;
+        height: 56px;
+        border-radius: 16px;
+        display: grid;
+        place-items: center;
+        overflow: hidden;
+        background: linear-gradient(
+          135deg,
+          rgba(124, 92, 255, 0.62),
+          rgba(255, 79, 216, 0.45)
+        );
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        font-size: 18px;
+        font-weight: 800;
+      }
+
+      .showcase-thumb.video-thumb {
+        aspect-ratio: 9 / 16;
+        width: 44px;
+        height: 64px;
+        border-radius: 14px;
+        justify-self: center;
+      }
+
+      .showcase-copy {
+        min-width: 0;
+      }
+
+      .showcase-copy strong {
+        display: block;
+        margin-bottom: 4px;
+        font-size: 13px;
+        line-height: 1.3;
+      }
+
+      .showcase-copy span {
+        display: block;
+        color: var(--muted);
+        font-size: 11px;
+        line-height: 1.55;
+        font-weight: 600;
+      }
+
+      .showcase-action {
+        min-width: 102px;
+        padding: 9px 12px;
+        border-radius: 999px;
+        text-align: center;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.06);
+        font-size: 11px;
+        font-weight: 800;
+        line-height: 1.2;
+        transition: 0.25s;
+      }
+
+      .showcase-item:hover .showcase-action {
+        background: linear-gradient(135deg, var(--primary), var(--pink));
+        border-color: transparent;
+      }
+
+      .video-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        display: none;
+        place-items: center;
+        padding: 24px;
+        background: rgba(3, 3, 12, 0.86);
+        backdrop-filter: blur(14px);
+      }
+
+      .video-modal.open {
+        display: grid;
+      }
+
+      .video-modal-card {
+        width: min(900px, 100%);
+        max-height: calc(100vh - 48px);
+        overflow: auto;
+        border-radius: 28px;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        background: #0d0d1b;
+        box-shadow: 0 40px 120px rgba(0, 0, 0, 0.55);
+      }
+
+      .video-modal-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 18px 20px;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .video-modal-head strong {
+        font-size: 15px;
+      }
+
+      .video-close {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        border: 1px solid var(--line);
+        background: rgba(255, 255, 255, 0.06);
+        color: #fff;
+        font-size: 24px;
+        cursor: pointer;
+      }
+
+      .video-frame {
+        padding: 18px;
+      }
+
+      .video-frame video,
+      .video-frame iframe {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        border: 0;
+        border-radius: 18px;
+        background: #000;
+      }
+
       .expwrap {
         display: grid;
         grid-template-columns: 0.82fr 1.18fr;
@@ -1034,6 +1263,12 @@
         opacity: 1;
         transform: translateY(0);
       }
+      @media (max-width: 1200px) {
+        .project-showcase {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
       @media (max-width: 1050px) {
         .skills {
           grid-template-columns: repeat(3, 1fr);
@@ -1044,12 +1279,22 @@
         .workflow {
           grid-template-columns: repeat(2, 1fr);
         }
+        .project-showcase {
+          grid-template-columns: 1fr;
+        }
       }
       @media (max-width: 920px) {
         .hero-grid,
         .story .container,
         .expwrap {
           grid-template-columns: 1fr;
+        }
+        .project-group-head {
+          align-items: flex-start;
+          flex-direction: column;
+        }
+        .project-count {
+          display: none;
         }
         .story:nth-child(even) .story-card {
           grid-column: auto;
@@ -1089,6 +1334,27 @@
         .container,
         .nav {
           width: min(100% - 24px, var(--max));
+        }
+        .showcase-item {
+          grid-template-columns: 48px 1fr;
+          gap: 10px;
+        }
+        .showcase-thumb {
+          width: 48px;
+          height: 48px;
+          border-radius: 14px;
+        }
+        .showcase-thumb.video-thumb {
+          width: 40px;
+          height: 58px;
+        }
+        .showcase-action {
+          grid-column: 2;
+          justify-self: start;
+          min-width: 0;
+        }
+        .video-modal {
+          padding: 12px;
         }
         h1 {
           letter-spacing: -2.8px;
@@ -1141,13 +1407,11 @@
     <div class="noise"></div>
     <header>
       <nav class="nav">
-        <a class="brand" href="#home"
-          ><span class="mark"></span><span>Lê Minh Trí</span></a
-        >
+        <a class="brand" href="#home"><span class="mark">T</span></a>
         <div class="links" id="links">
-          <a href="#skills">Skills</a><a href="#projects">Projects</a
-          ><a href="#experience">Experience</a><a href="#workflow">Workflow</a
-          ><a class="cta" href="#contact">Contact</a>
+          <a href="#skills">Kỹ năng</a><a href="#projects">Dự án</a
+          ><a href="#experience">Kinh nghiệm</a><a href="#workflow">Quy trình</a
+          ><a class="cta" href="#contact">Liên hệ</a>
         </div>
         <button class="menu" id="menu">☰</button>
       </nav>
@@ -1175,11 +1439,9 @@
             </p>
             <div class="actions">
               <a class="btn primary" href="#contact">Liên hệ tôi</a
-              ><a class="btn secondary" href="cv-le-minh-tri-vi.pdf" download
-                >Tải CV tiếng Việt</a
-              ><a class="btn secondary" href="cv-le-minh-tri-en.pdf" download
-                >Download English CV</a
-              >
+              ><a class="btn secondary" href="leminhtri-marketing.pdf" download
+                >Tải CV
+              </a>
             </div>
             <div class="stats">
               <div class="stat">
@@ -1216,7 +1478,7 @@
           <span>SCROLL TO EXPLORE</span>
         </div>
       </section>
-      <section class="story" id="story1" data-scene="1">
+      <!-- <section class="story" id="story1" data-scene="1">
         <div class="container">
           <article class="story-card">
             <span class="num">01</span>
@@ -1228,8 +1490,7 @@
             </p>
             <div class="chips">
               <span class="chip">Content Planning</span
-              ><span class="chip">Brand Message</span
-              ><span class="chip">Multi-format</span>
+              ><span class="chip">Brand Message</span>
             </div>
           </article>
         </div>
@@ -1246,23 +1507,18 @@
             </p>
             <div class="chips">
               <span class="chip">Landing Page</span
-              ><span class="chip">Website Content</span
-              ><span class="chip">Tool Adaptation</span>
+              ><span class="chip">Website Content</span>
             </div>
           </article>
         </div>
-      </section>
+      </section> -->
       <section class="panel" id="skills" data-scene="3">
         <div class="container">
           <div class="section-head reveal">
             <div>
-              <div class="label">Core Skills</div>
-              <h2>Bộ kỹ năng Content Marketing</h2>
+              <div class="label">Skills</div>
+              <h2>Kỹ năng</h2>
             </div>
-            <p>
-              Các kỹ năng được xây dựng từ quá trình lên ý tưởng, sản xuất nội
-              dung, vận hành kênh và triển khai tài nguyên Marketing thực tế.
-            </p>
           </div>
           <div class="skills">
             <article
@@ -1396,72 +1652,224 @@
         <div class="container">
           <div class="section-head reveal">
             <div>
-              <div class="label">Projects & Video</div>
-              <h2>Dự án / nội dung có thể showcase</h2>
+              <div class="label">Projects</div>
+              <h2>Dự án</h2>
             </div>
-            <p>
-              Khu vực này dùng để gắn video bạn từng xuất hiện, chiến dịch
-              content, website hoặc landing page đã triển khai.
-            </p>
           </div>
-          <div class="projects">
-            <article class="project reveal">
-              <div class="visual"><div class="phone"></div></div>
-              <div class="content">
-                <div class="tags">
-                  <span>Video</span><span>On-camera</span
-                  ><span>Product Intro</span>
-                </div>
-                <h3>Video giới thiệu sản phẩm</h3>
-                <p>
-                  Trực tiếp xuất hiện trước ống kính, giới thiệu sản phẩm và
-                  truyền tải thông điệp theo định hướng chiến dịch.
-                </p>
-              </div>
-            </article>
-            <article class="project reveal">
-              <div class="visual">
-                <div class="calendar">
-                  <span></span><span></span><span></span><span></span
-                  ><span></span><span></span><span></span><span></span
-                  ><span></span>
+
+          <div class="project-showcase">
+            <!-- 01. VIDEO GIỚI THIỆU SẢN PHẨM -->
+            <section class="project-group reveal">
+              <div class="project-group-head">
+                <div class="project-group-title">
+                  <div class="project-group-icon">▶</div>
+                  <div>
+                    <h3>Video</h3>
+                    <p>Nhấn vào từng video để xem trực tiếp.</p>
+                  </div>
                 </div>
               </div>
-              <div class="content">
-                <div class="tags">
-                  <span>Fanpage</span><span>TikTok</span><span>YouTube</span>
-                </div>
-                <h3>Lịch nội dung đa nền tảng</h3>
-                <p>
-                  Triển khai lịch đăng bài, quản lý kênh truyền thông và giữ sự
-                  đồng bộ về hình ảnh, giọng văn, thông điệp.
-                </p>
+
+              <div class="showcase-list">
+                <!-- Thay data-video bằng link YouTube hoặc đường dẫn file .mp4 của bạn -->
+                <button
+                  class="showcase-item video-item"
+                  type="button"
+                  data-title="Lắp điện mặt trời bao nhiêu kWp mới thật sự phù hợp? "
+                  data-video="videos/solargreen.mp4"
+                >
+                  <span class="showcase-thumb video-thumb">
+                    <img src="solar.jpg" alt="" />
+                  </span>
+                  <span class="showcase-copy">
+                    <strong
+                      >Lắp điện mặt trời bao nhiêu kWp mới thật sự phù hợp?
+                    </strong>
+                    <span>On-camera · Giới thiệu sản phẩm</span>
+                  </span>
+                </button>
+
+                <button
+                  class="showcase-item video-item"
+                  type="button"
+                  data-title="Điểm nổi bật của ắc quy Natri-ion"
+                  data-video="videos/làn sóng năng lượng mới.mp4"
+                >
+                  <span class="showcase-thumb video-thumb">
+                    <img src="./lansongnangluong.jpg" alt="" />
+                  </span>
+                  <span class="showcase-copy">
+                    <strong>Điểm nổi bật của ắc quy Natri-ion</strong>
+                    <span>Kịch bản · On-camera · Giới thiệu sản phẩm</span>
+                  </span>
+                </button>
+
+                <button
+                  class="showcase-item video-item"
+                  type="button"
+                  data-title="Giải pháp năng lượng cho mùa nắng nóng"
+                  data-video="videos/tháng 3 mua nóng bắt đầu.mp4"
+                >
+                  <span class="showcase-thumb video-thumb">
+                    <img src="./thang3.jpg" alt="" />
+                  </span>
+                  <span class="showcase-copy">
+                    <strong>Giải pháp năng lượng cho mùa nắng nóng </strong>
+                    <span>Kịch bản · On-camera · Giới thiệu sản phẩm</span>
+                  </span>
+                </button>
               </div>
-            </article>
-            <article class="project reveal">
-              <div class="visual">
-                <div class="web">
-                  <div class="bar"></div>
-                  <div class="line"></div>
-                  <div class="line"></div>
-                  <div class="line"></div>
+            </section>
+
+            <section class="project-group reveal">
+              <div class="project-group-head">
+                <div class="project-group-title">
+                  <div class="project-group-icon">f</div>
+                  <div>
+                    <h3>Fanpage</h3>
+                    <p>Các fanpage tôi từng phụ trách nội dung và vận hành.</p>
+                  </div>
                 </div>
               </div>
-              <div class="content">
-                <div class="tags">
-                  <span>Website</span><span>Landing Page</span
-                  ><span>SEO Content</span>
-                </div>
-                <h3>Website content & landing page</h3>
-                <p>
-                  Tham gia xây dựng, cập nhật và tối ưu nội dung website công ty
-                  theo hướng rõ ràng, dễ hiểu và chuyên nghiệp.
-                </p>
+
+              <div class="showcase-list">
+                <!-- Thay href="#" bằng link fanpage thật -->
+                <a
+                  class="showcase-item"
+                  href="https://www.facebook.com/giaiphapsolarviet"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span class="showcase-thumb" style="background: #fff">
+                    <img src="./fpsola.jpg" alt="" />
+                  </span>
+                  <span class="showcase-copy">
+                    <strong>Giải Pháp Solar Việt</strong>
+                    <span>Lên nội dung · Lịch đăng · Quản lý bài viết</span>
+                  </span>
+                </a>
+
+                <a
+                  class="showcase-item"
+                  href="https://www.facebook.com/profile.php?id=61579318341644"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span class="showcase-thumb" style="background: #fff">
+                    <img src="./fpnatrium.jpg" alt="" />
+                  </span>
+                  <span class="showcase-copy">
+                    <strong>NatriumOne Việt Nam</strong>
+                    <span>Lên nội dung · Lịch đăng · Quản lý bài viết</span>
+                  </span>
+                </a>
+
+                <a
+                  class="showcase-item"
+                  href="https://www.facebook.com/NatriIon"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span class="showcase-thumb" style="background: #fff">
+                    <img src="./fpnatri.jpg" alt="" />
+                  </span>
+                  <span class="showcase-copy">
+                    <strong>Natri-ion</strong>
+                    <span>Lên nội dung · Lịch đăng · Quản lý bài viết</span>
+                  </span>
+                </a>
               </div>
-            </article>
+            </section>
+
+            <!-- 03. WEBSITE / LANDING PAGE ĐÃ LÀM -->
+            <section class="project-group reveal">
+              <div class="project-group-head">
+                <div class="project-group-title">
+                  <div class="project-group-icon">⌘</div>
+                  <div>
+                    <h3>Website & Landing Page</h3>
+                    <p>
+                      Các trang tôi tham gia xây dựng, cập nhật hoặc triển khai.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <div class="showcase-list">
+                <!-- Thay href="#" bằng link website/landing page thật -->
+                <a
+                  class="showcase-item"
+                  href="https://giaiphapsolarviet.com/"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span class="showcase-thumb" style="background: #fff">
+                    <img src="solar.png" alt="Giải Pháp Solar Việt" />
+                  </span>
+                  <span class="showcase-copy">
+                    <strong>Giải Pháp Solar Việt</strong>
+                    <span>Website · Content · Data · SEO · Responsive</span>
+                  </span>
+                </a>
+
+                <a
+                  class="showcase-item"
+                  href="https://keyprime.vercel.app/"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span class="showcase-thumb" style="background: #fff">
+                    <img src="keyprime.png" alt="KeyPrime" />
+                  </span>
+                  <span class="showcase-copy">
+                    <strong>KeyPrime</strong>
+                    <span>Landing Page · Content · Responsive</span>
+                  </span>
+                </a>
+
+                <a
+                  class="showcase-item"
+                  href="https://ironx.vn/"
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span class="showcase-thumb" style="background: #fff">
+                    <img src="ironx.png" alt="IronX" />
+                  </span>
+                  <span class="showcase-copy">
+                    <strong>IronX</strong>
+                    <span>Landing Page · Content · Responsive </span>
+                  </span>
+                </a>
+              </div>
+            </section>
           </div>
         </div>
       </section>
+
+      <!-- VIDEO MODAL -->
+      <div class="video-modal" id="videoModal" aria-hidden="true">
+        <div
+          class="video-modal-card"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="videoModalTitle"
+        >
+          <div class="video-modal-head">
+            <strong id="videoModalTitle">Video showcase</strong>
+            <button
+              class="video-close"
+              id="videoClose"
+              type="button"
+              aria-label="Đóng video"
+            >
+              ×
+            </button>
+          </div>
+          <div class="video-frame" id="videoFrame"></div>
+        </div>
+      </div>
+
       <section class="panel" id="experience" data-scene="5">
         <div class="container expwrap">
           <div class="box reveal">
@@ -1534,10 +1942,6 @@
               <div class="label">Workflow</div>
               <h2>Cách tôi triển khai một ý tưởng</h2>
             </div>
-            <p>
-              Quy trình làm việc theo hướng thực tế: hiểu mục tiêu, chọn format
-              phù hợp, sản xuất nội dung và đo lại hiệu quả triển khai.
-            </p>
           </div>
           <div class="workflow">
             <article class="flow reveal">
@@ -1605,6 +2009,88 @@
       links
         .querySelectorAll("a")
         .forEach((a) => (a.onclick = () => links.classList.remove("open")));
+
+      // Project video viewer
+      const videoModal = document.getElementById("videoModal"),
+        videoFrame = document.getElementById("videoFrame"),
+        videoClose = document.getElementById("videoClose"),
+        videoModalTitle = document.getElementById("videoModalTitle");
+
+      function normalizeVideoUrl(url) {
+        if (!url) return "";
+        try {
+          const parsed = new URL(url, window.location.href);
+          if (
+            parsed.hostname.includes("youtube.com") &&
+            parsed.searchParams.get("v")
+          ) {
+            return `https://www.youtube.com/embed/${parsed.searchParams.get("v")}?autoplay=1`;
+          }
+          if (parsed.hostname === "youtu.be") {
+            return `https://www.youtube.com/embed/${parsed.pathname.slice(1)}?autoplay=1`;
+          }
+        } catch (e) {}
+        return url;
+      }
+
+      function openProjectVideo(url, title) {
+        const normalized = normalizeVideoUrl(url);
+        videoModalTitle.textContent = title || "Video showcase";
+        videoFrame.innerHTML = "";
+
+        if (!normalized || normalized === "#") {
+          videoFrame.innerHTML =
+            '<div class="video-empty">Chưa gắn link video. Hãy thay <b>data-video</b> của item này bằng link YouTube hoặc đường dẫn file MP4.</div>';
+        } else if (/\.(mp4|webm|ogg)(\?.*)?$/i.test(normalized)) {
+          const video = document.createElement("video");
+          video.src = normalized;
+          video.controls = true;
+          video.autoplay = true;
+          video.playsInline = true;
+          videoFrame.appendChild(video);
+        } else {
+          const iframe = document.createElement("iframe");
+          iframe.src = normalized;
+          iframe.title = title || "Video showcase";
+          iframe.allow =
+            "autoplay; encrypted-media; picture-in-picture; fullscreen";
+          iframe.allowFullscreen = true;
+          videoFrame.appendChild(iframe);
+        }
+
+        videoModal.classList.add("open");
+        videoModal.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeProjectVideo() {
+        videoModal.classList.remove("open");
+        videoModal.setAttribute("aria-hidden", "true");
+        videoFrame.innerHTML = "";
+        document.body.style.overflow = "";
+      }
+
+      document.querySelectorAll(".video-item").forEach((item) => {
+        item.addEventListener("click", () => {
+          openProjectVideo(item.dataset.video, item.dataset.title);
+        });
+      });
+
+      videoClose.addEventListener("click", closeProjectVideo);
+      videoModal.addEventListener("click", (e) => {
+        if (e.target === videoModal) closeProjectVideo();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && videoModal.classList.contains("open")) {
+          closeProjectVideo();
+        }
+      });
+
+      // Prevent placeholder links from jumping to the top before real URLs are added.
+      document.querySelectorAll('.showcase-item[href="#"]').forEach((link) => {
+        link.addEventListener("click", (e) => e.preventDefault());
+      });
+
       const scene = new THREE.Scene();
       scene.fog = new THREE.FogExp2(0x070713, 0.056);
       const camera = new THREE.PerspectiveCamera(
