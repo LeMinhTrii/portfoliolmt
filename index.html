@@ -142,6 +142,21 @@
         left: 0;
         right: 0;
         z-index: 60;
+        transition:
+          opacity 0.25s ease,
+          visibility 0.25s ease,
+          transform 0.25s ease;
+      }
+      body.viewer-open header {
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(-18px);
+        pointer-events: none;
+      }
+      body.viewer-open .dots {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
       }
       .nav {
         width: min(var(--max), calc(100% - 40px));
@@ -218,6 +233,9 @@
         z-index: 40;
         display: grid;
         gap: 14px;
+        transition:
+          opacity 0.25s ease,
+          visibility 0.25s ease;
       }
       .dots a {
         width: 10px;
@@ -883,74 +901,391 @@
         font-weight: 600;
       }
 
-      /* ===== PROJECT SHOWCASE - 3 GROUPS ===== */
+      /* ===== PROJECT SHOWCASE ===== */
       .project-showcase {
         display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 18px;
-        align-items: start;
+        gap: 0;
+        width: 100%;
+        min-width: 0;
+        overflow: hidden;
       }
 
       .project-group {
-        border: 1px solid var(--line);
-        border-radius: 28px;
-        background:
-          radial-gradient(
-            circle at 88% 6%,
-            rgba(124, 92, 255, 0.16),
-            transparent 32%
-          ),
-          radial-gradient(
-            circle at 14% 22%,
-            rgba(255, 79, 216, 0.1),
-            transparent 28%
-          ),
-          var(--glass);
-        backdrop-filter: blur(20px);
-        box-shadow: 0 24px 72px rgba(0, 0, 0, 0.2);
-        padding: 18px;
+        border: 0;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.11);
+        border-radius: 0;
+        background: transparent;
+        backdrop-filter: none;
+        box-shadow: none;
+        padding: 42px 0 64px;
+        width: 100%;
+        min-width: 0;
         overflow: hidden;
+      }
+
+      .project-group:first-child {
+        padding-top: 8px;
+      }
+      .project-group:last-child {
+        border-bottom: 0;
+        padding-bottom: 10px;
+      }
+
+      .project-group.featured {
+        padding: 8px 0 64px;
+      }
+      .project-group.featured .project-group-head {
+        padding: 0;
+      }
+      .content-plan-card {
+        display: block;
+        width: 100%;
+        border: 0;
+        background: transparent;
+        color: inherit;
+        cursor: zoom-in;
+        padding: 0;
+      }
+      .content-plan-card img {
+        display: block;
+        width: 100%;
+        height: min(560px, 55vw);
+        min-height: 280px;
+        object-fit: cover;
+        object-position: top;
+        border-radius: 0 0 28px 28px;
+      }
+
+      .media-rail-wrap {
+        position: relative;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        padding-bottom: 68px;
+        overflow: hidden;
+      }
+      .media-rail {
+        display: grid;
+        width: 100%;
+        min-width: 0;
+        grid-auto-flow: column;
+        grid-auto-columns: 24%;
+        gap: 18px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        padding: 2px 2px 18px;
+        overscroll-behavior-inline: contain;
+      }
+      .media-rail::-webkit-scrollbar {
+        display: none;
+      }
+      .media-card {
+        position: relative;
+        width: 100%;
+        min-width: 0;
+        height: auto;
+        aspect-ratio: 3/5;
+        scroll-snap-align: start;
+        overflow: hidden;
+        border: 0;
+        border-radius: 18px;
+        background: transparent;
+        cursor: zoom-in;
+        padding: 0;
+        color: #fff;
+        font: inherit;
+        text-align: left;
+      }
+      .media-card img {
+        /* object-fit: contain; */
+        object-position: top;
+        background: transparent;
+      }
+      .social-gallery .media-rail {
+        grid-auto-columns: calc((100% - 54px) / 4);
+      }
+      .social-gallery .media-card {
+        height: auto;
+        /* aspect-ratio: 9 / 16; */
+      }
+      .media-card img {
+        transition: transform 0.35s ease;
+      }
+      .media-card:hover img {
+        transform: scale(1.035);
+      }
+      .media-card::after {
+        /* content: "Xem toàn màn hình"; */
+        position: absolute;
+        left: 12px;
+        bottom: 12px;
+        padding: 7px 10px;
+        border-radius: 999px;
+        background: rgba(7, 7, 19, 0.72);
+        backdrop-filter: blur(10px);
+        font-size: 10px;
+        font-weight: 800;
+      }
+      .rail-btn {
+        position: absolute;
+        z-index: 3;
+        top: auto;
+        bottom: 6px;
+        transform: none;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.35);
+        background: rgba(7, 7, 19, 0.82);
+        color: #fff;
+        cursor: pointer;
+        font-size: 20px;
+      }
+      .rail-btn.prev {
+        left: auto;
+        right: 58px;
+      }
+      .rail-btn.next {
+        right: 0;
+      }
+      .rail-progress {
+        position: absolute;
+        left: 0;
+        bottom: 25px;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+      }
+      .rail-progress span {
+        width: 8px;
+        height: 8px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.28);
+        transition: 0.25s;
+      }
+      .rail-progress span.active {
+        width: 34px;
+        background: linear-gradient(
+          90deg,
+          var(--cyan),
+          var(--primary),
+          var(--pink)
+        );
+      }
+
+      .video-categories {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 12px;
+      }
+      .video-category {
+        min-height: 138px;
+        padding: 18px;
+        border-radius: 22px;
+        border: 1px solid var(--line);
+        background: linear-gradient(
+          145deg,
+          rgba(124, 92, 255, 0.16),
+          rgba(255, 255, 255, 0.045)
+        );
+        color: #fff;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+        transition: 0.25s;
+      }
+      .video-category:hover,
+      .video-category.active {
+        transform: translateY(-4px);
+        border-color: rgba(255, 255, 255, 0.3);
+        background: linear-gradient(
+          145deg,
+          rgba(124, 92, 255, 0.34),
+          rgba(255, 79, 216, 0.16)
+        );
+      }
+      .video-category b {
+        display: block;
+        font-size: 15px;
+        margin: 16px 0 6px;
+      }
+      .video-category span {
+        color: var(--muted);
+        font-size: 11px;
+        font-weight: 700;
+      }
+      .category-icon {
+        font-size: 24px;
+      }
+      .video-library {
+        display: none;
+        gap: 9px;
+        margin-top: 14px;
+      }
+      .video-library.open {
+        display: grid;
+        animation: listOpen 0.28s ease both;
+      }
+      @keyframes listOpen {
+        from {
+          opacity: 0;
+          transform: translateY(-8px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .video-tile {
+        width: 100%;
+        min-height: 72px;
+        display: grid;
+        grid-template-columns: 42px 1fr auto;
+        align-items: center;
+        gap: 13px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.045);
+        color: #fff;
+        padding: 10px 14px;
+        font: inherit;
+        text-align: left;
+        cursor: pointer;
+        transition: 0.25s;
+      }
+      .video-tile:hover {
+        transform: translateX(5px);
+        background: rgba(255, 255, 255, 0.09);
+        border-color: rgba(255, 255, 255, 0.28);
+      }
+      .video-tile .play {
+        grid-row: 1 / span 2;
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--primary), var(--pink));
+      }
+      .video-tile strong {
+        grid-column: 2;
+        align-self: end;
+        display: block;
+        font-size: 13px;
+        line-height: 1.4;
+      }
+      .video-tile small {
+        grid-column: 2;
+        align-self: start;
+        display: block;
+        color: var(--muted);
+      }
+      .video-tile::after {
+        content: "Xem video  ›";
+        grid-column: 3;
+        grid-row: 1 / span 2;
+        color: #fff;
+        font-size: 10px;
+        font-weight: 900;
+        padding: 8px 10px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+      }
+
+      .media-modal {
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        display: none;
+        place-items: center;
+        padding: 24px;
+        background: rgba(3, 3, 12, 0.9);
+        backdrop-filter: blur(14px);
+      }
+      .media-modal.open {
+        display: grid;
+      }
+      .media-modal-card {
+        width: min(1100px, 100%);
+        max-height: calc(100vh - 48px);
+        overflow: auto;
+        border: 1px solid rgba(255, 255, 255, 0.18);
+        border-radius: 28px;
+        background: #0d0d1b;
+      }
+      .media-modal-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--line);
+      }
+      .media-modal-body {
+        padding: 18px;
+        display: grid;
+        place-items: center;
+      }
+      .media-modal-body img {
+        width: auto;
+        max-width: 100%;
+        height: auto;
+        max-height: calc(100vh - 150px);
+        object-fit: contain;
+        border-radius: 16px;
       }
 
       .project-group-head {
         display: flex;
-        align-items: center;
+        align-items: flex-end;
         justify-content: space-between;
         gap: 14px;
-        margin-bottom: 16px;
+        margin-bottom: 26px;
       }
 
       .project-group-title {
         display: flex;
-        align-items: center;
-        gap: 12px;
+        align-items: flex-end;
+        gap: 18px;
         min-width: 0;
+      }
+      .project-group-title > div:last-child {
+        display: flex;
+        flex-direction: column;
       }
 
       .project-group-icon {
-        width: 50px;
-        height: 50px;
-        flex: 0 0 50px;
-        display: grid;
-        place-items: center;
-        border-radius: 16px;
+        width: auto;
+        height: auto;
+        flex: 0 0 auto;
+        display: block;
+        border-radius: 0;
         background: linear-gradient(135deg, var(--primary), var(--pink));
-        box-shadow: 0 14px 32px rgba(124, 92, 255, 0.24);
-        font-size: 22px;
-        font-weight: 800;
+        -webkit-background-clip: text;
+        color: transparent;
+        box-shadow: none;
+        font-size: 40px;
+        line-height: 1;
+        font-weight: 900;
       }
 
       .project-group h3 {
-        font-size: 20px;
-        line-height: 1.1;
-        margin-bottom: 6px;
+        font-size: clamp(32px, 4vw, 52px);
+        line-height: 1;
+        letter-spacing: -1.4px;
+        margin-bottom: 0;
       }
 
       .project-group-head p {
+        order: -1;
         color: var(--muted);
-        font-size: 12px;
-        line-height: 1.5;
-        font-weight: 600;
+        font-size: 10px;
+        line-height: 1.2;
+        letter-spacing: 1.8px;
+        text-transform: uppercase;
+        margin-bottom: 9px;
+        font-weight: 900;
       }
 
       .project-count {
@@ -1118,6 +1453,13 @@
         background: #000;
       }
 
+      .asset-note {
+        color: var(--muted);
+        font-size: 11px;
+        margin-top: 10px;
+        line-height: 1.55;
+      }
+
       .expwrap {
         display: grid;
         grid-template-columns: 0.82fr 1.18fr;
@@ -1265,7 +1607,7 @@
       }
       @media (max-width: 1200px) {
         .project-showcase {
-          grid-template-columns: repeat(2, minmax(0, 1fr));
+          grid-template-columns: 1fr;
         }
       }
 
@@ -1355,6 +1697,36 @@
         }
         .video-modal {
           padding: 12px;
+        }
+        .media-rail {
+          grid-auto-columns: 88%;
+          gap: 12px;
+        }
+        .media-card {
+          height: auto;
+          min-height: 0;
+          aspect-ratio: 4 / 5;
+        }
+        .social-gallery .media-rail {
+          grid-auto-columns: 78%;
+        }
+        .social-gallery .media-card {
+          /* aspect-ratio: 9 / 16; */
+        }
+        .video-categories {
+          grid-template-columns: repeat(2, 1fr);
+        }
+        .video-tile {
+          grid-template-columns: 38px 1fr;
+        }
+        .video-tile::after {
+          display: none;
+        }
+        .rail-btn {
+          display: none;
+        }
+        .content-plan-card img {
+          height: 390px;
         }
         h1 {
           letter-spacing: -2.8px;
@@ -1649,6 +2021,406 @@
         </div>
       </section>
       <section class="panel" id="projects" data-scene="4">
+        <div class="container">
+          <div class="section-head reveal">
+            <div>
+              <div class="label">Selected work</div>
+              <h2>Dự án</h2>
+            </div>
+          </div>
+
+          <div class="project-showcase">
+            <section class="project-group featured reveal">
+              <div class="project-group-head">
+                <div class="project-group-title">
+                  <div class="project-group-icon">01</div>
+                  <div>
+                    <h3>Content Plan</h3>
+                    <p>Planning & Reporting</p>
+                  </div>
+                </div>
+              </div>
+              <button
+                class="content-plan-card image-item"
+                type="button"
+                data-title="Content Plan"
+                data-image="https://res.cloudinary.com/dcrmytq7y/image/upload/v1789981309/contentplan_ifszpn.png"
+              >
+                <img
+                  src="https://res.cloudinary.com/dcrmytq7y/image/upload/v1789981309/contentplan_ifszpn.png"
+                  alt="Content Plan"
+                  loading="lazy"
+                />
+              </button>
+            </section>
+
+            <section class="project-group social-gallery reveal">
+              <div class="project-group-head">
+                <div class="project-group-title">
+                  <div class="project-group-icon">02</div>
+                  <div>
+                    <h3>Social Traffic</h3>
+                    <p>Channel Performance</p>
+                  </div>
+                </div>
+              </div>
+              <div class="media-rail-wrap">
+                <button
+                  class="rail-btn prev"
+                  type="button"
+                  aria-label="Ảnh trước"
+                >
+                  ‹
+                </button>
+                <div class="media-rail">
+                  <button
+                    class="media-card image-item"
+                    data-title="Social Traffic 01"
+                    data-image="https://res.cloudinary.com/dvvbhf9dc/image/upload/v1789548612/1789360719199_473391310977022369_933443018454390468_176709950a9f558b19695297ca9b49ee_cbdwpd.jpg"
+                  >
+                    <img
+                      src="https://res.cloudinary.com/dvvbhf9dc/image/upload/v1789548612/1789360719199_473391310977022369_933443018454390468_176709950a9f558b19695297ca9b49ee_cbdwpd.jpg"
+                      alt="Social Traffic 01"
+                      loading="lazy"
+                    />
+                  </button>
+                  <button
+                    class="media-card image-item"
+                    data-title="Social Traffic 02"
+                    data-image="https://res.cloudinary.com/dvvbhf9dc/image/upload/v1789548612/1789360719226_473391310977022369_933443018454390468_24d8b7e4780b7a762fa372a443435e74_igsh6k.jpg"
+                  >
+                    <img
+                      src="https://res.cloudinary.com/dvvbhf9dc/image/upload/v1789548612/1789360719226_473391310977022369_933443018454390468_24d8b7e4780b7a762fa372a443435e74_igsh6k.jpg"
+                      alt="Social Traffic 02"
+                      loading="lazy"
+                    />
+                  </button>
+                  <button
+                    class="media-card image-item"
+                    data-title="Social Traffic 03"
+                    data-image="https://res.cloudinary.com/dvvbhf9dc/image/upload/v1789548612/1789360719241_473391310977022369_933443018454390468_9af3a7ebd521c2b0add1585b3062f9ea_pttqvf.jpg"
+                  >
+                    <img
+                      src="https://res.cloudinary.com/dvvbhf9dc/image/upload/v1789548612/1789360719241_473391310977022369_933443018454390468_9af3a7ebd521c2b0add1585b3062f9ea_pttqvf.jpg"
+                      alt="Social Traffic 03"
+                      loading="lazy"
+                    />
+                  </button>
+                  <button
+                    class="media-card image-item"
+                    data-title="Social Traffic 04"
+                    data-image="https://res.cloudinary.com/dvvbhf9dc/image/upload/v1789548612/1789360719254_473391310977022369_933443018454390468_b27f6907efce3d5848e69ce8535066a3_eztahk.jpg"
+                  >
+                    <img
+                      src="https://res.cloudinary.com/dvvbhf9dc/image/upload/v1789548612/1789360719254_473391310977022369_933443018454390468_b27f6907efce3d5848e69ce8535066a3_eztahk.jpg"
+                      alt="Social Traffic 04"
+                      loading="lazy"
+                    />
+                  </button>
+                  <button
+                    class="media-card image-item"
+                    data-title="Social Traffic 05"
+                    data-image="https://res.cloudinary.com/dvvbhf9dc/image/upload/v1789548612/1789360719265_473391310977022369_933443018454390468_716a69f2202d4817d90f9dbb8e90d97e_d7xvl2.jpg"
+                  >
+                    <img
+                      src="https://res.cloudinary.com/dvvbhf9dc/image/upload/v1789548612/1789360719265_473391310977022369_933443018454390468_716a69f2202d4817d90f9dbb8e90d97e_d7xvl2.jpg"
+                      alt="Social Traffic 05"
+                      loading="lazy"
+                    />
+                  </button>
+                  <button
+                    class="media-card image-item"
+                    data-title="Social Traffic 06"
+                    data-image="https://res.cloudinary.com/dvvbhf9dc/image/upload/v1789548612/1789360719275_473391310977022369_933443018454390468_c39d28c036bccbeb356027ce5a810e2c_vduphb.jpg"
+                  >
+                    <img
+                      src="https://res.cloudinary.com/dvvbhf9dc/image/upload/v1789548612/1789360719275_473391310977022369_933443018454390468_c39d28c036bccbeb356027ce5a810e2c_vduphb.jpg"
+                      alt="Social Traffic 06"
+                      loading="lazy"
+                    />
+                  </button>
+                </div>
+                <button
+                  class="rail-btn next"
+                  type="button"
+                  aria-label="Ảnh tiếp theo"
+                >
+                  ›
+                </button>
+              </div>
+            </section>
+
+            <section class="project-group reveal">
+              <div class="project-group-head">
+                <div class="project-group-title">
+                  <div class="project-group-icon">03</div>
+                  <div>
+                    <h3>Video</h3>
+                    <p>Video Production</p>
+                  </div>
+                </div>
+                <span class="project-count">09 VIDEO</span>
+              </div>
+              <div class="video-categories">
+                <button class="video-category" data-category="vj">
+                  <span class="category-icon">◉</span><b>VJ / Brand Face</b
+                  ><span>03 video</span>
+                </button>
+                <button class="video-category" data-category="b2b">
+                  <span class="category-icon">◇</span><b>B2B</b
+                  ><span>01 video</span>
+                </button>
+                <button class="video-category" data-category="tvc">
+                  <span class="category-icon">▶</span><b>TVC / Recap sự kiện</b
+                  ><span>04 video</span>
+                </button>
+                <button class="video-category" data-category="other">
+                  <span class="category-icon">＋</span><b>Khác</b
+                  ><span>01 video</span>
+                </button>
+              </div>
+              <div class="video-library" data-library="vj">
+                <button
+                  class="video-tile video-item"
+                  data-title="Solar Green"
+                  data-video="https://res.cloudinary.com/dcrmytq7y/video/upload/v1788774999/solargreen_vldpgc.mp4"
+                >
+                  <span class="play">▶</span><strong>Solar Green</strong
+                  ><small>VJ / Brand Face</small>
+                </button>
+                <button
+                  class="video-tile video-item"
+                  data-title="Tháng 3 mùa nóng bắt đầu"
+                  data-video="https://res.cloudinary.com/dcrmytq7y/video/upload/v1788774995/tha%CC%81ng_3_mua_no%CC%81ng_ba%CC%86%CC%81t_%C4%91a%CC%82%CC%80u_os6icv.mp4"
+                >
+                  <span class="play">▶</span
+                  ><strong>Tháng 3 mùa nóng bắt đầu</strong
+                  ><small>VJ / Brand Face</small>
+                </button>
+                <button
+                  class="video-tile video-item"
+                  data-title="Làn sóng năng lượng mới"
+                  data-video="https://res.cloudinary.com/dcrmytq7y/video/upload/v1789977870/lan-song-nang-luong-moi_8z68uXrO_dt6z8y.mp4"
+                >
+                  <span class="play">▶</span
+                  ><strong>Làn sóng năng lượng mới</strong
+                  ><small>VJ / Brand Face</small>
+                </button>
+              </div>
+              <div class="video-library" data-library="b2b">
+                <button
+                  class="video-tile video-item"
+                  data-title="B2B"
+                  data-video="https://res.cloudinary.com/dcrmytq7y/video/upload/v1789979665/b2b.mp4"
+                >
+                  <span class="play">▶</span><strong>Video B2B</strong
+                  ><small>Giải pháp doanh nghiệp</small>
+                </button>
+              </div>
+              <div class="video-library" data-library="tvc">
+                <button
+                  class="video-tile video-item"
+                  data-title="TVC · Viết nội dung · Thu voice · Dựng clip"
+                  data-video="https://res.cloudinary.com/dvvbhf9dc/video/upload/v1789552516/TVC._Vi%E1%BA%BFt_n%E1%BB%99i_dung_Thu_voice_D%E1%BB%B1ng_clip_mejqe6.mp4"
+                >
+                  <span class="play">▶</span><strong>TVC Natriumone</strong
+                  ><small>TVC thương hiệu</small>
+                </button>
+                <button
+                  class="video-tile video-item"
+                  data-title="Thế giới đang chuyển mình mạnh mẽ"
+                  data-video="https://res.cloudinary.com/dcrmytq7y/video/upload/v1789979665/TVC_-_The%CC%82%CC%81_gio%CC%9B%CC%81i_%C4%91ang_chuye%CC%82%CC%89n_mi%CC%80nh_ma%CC%A3nh_me%CC%83_gojxj1.mp4"
+                >
+                  <span class="play">▶</span
+                  ><strong>Thế giới đang chuyển mình mạnh mẽ</strong
+                  ><small>TVC thương hiệu</small>
+                </button>
+                <button
+                  class="video-tile video-item"
+                  data-title="TVC Natri-ion"
+                  data-video="https://res.cloudinary.com/dcrmytq7y/video/upload/v1789979702/TVC_-_Natri_ion_nwaj8i.mp4"
+                >
+                  <span class="play">▶</span><strong>TVC Natri-ion</strong
+                  ><small>TVC thương hiệu</small>
+                </button>
+                <button
+                  class="video-tile video-item"
+                  data-title="EV Natri-ion 20.12"
+                  data-video="https://res.cloudinary.com/dcrmytq7y/video/upload/v1789979656/EV_NATR_ION_20.12_wfbrlk.mp4"
+                >
+                  <span class="play">▶</span><strong>EV Natri-ion 20.12</strong
+                  ><small>Recap sự kiện</small>
+                </button>
+              </div>
+              <div class="video-library" data-library="other">
+                <button
+                  class="video-tile video-item"
+                  data-title="Video Tết "
+                  data-video="https://res.cloudinary.com/dvvbhf9dc/video/upload/v1789552518/Video_T%E1%BA%BFt._Bi%C3%AAn_k%E1%BB%8Bch_quay_d%E1%BB%B1ng_Clip_qenyyl.mp4"
+                >
+                  <span class="play">▶</span><strong>Video Tết </strong
+                  ><small>Biên kịch · Diễn viên</small>
+                </button>
+              </div>
+            </section>
+
+            <section class="project-group fanpage-gallery reveal">
+              <div class="project-group-head">
+                <div class="project-group-title">
+                  <div class="project-group-icon">04</div>
+                  <div>
+                    <h3>Fanpage</h3>
+                    <p>Social Media Management</p>
+                  </div>
+                </div>
+              </div>
+              <div class="media-rail-wrap">
+                <button class="rail-btn prev" type="button">‹</button>
+                <div class="media-rail">
+                  <button
+                    class="media-card image-item"
+                    data-title="Fanpage 01"
+                    data-image="https://res.cloudinary.com/dcrmytq7y/image/upload/v1790001416/IMG_5446_qi7ohn.png"
+                  >
+                    <img
+                      src="https://res.cloudinary.com/dcrmytq7y/image/upload/v1790001416/IMG_5446_qi7ohn.png"
+                      alt="Fanpage 01"
+                      loading="lazy"
+                    />
+                  </button>
+                  <button
+                    class="media-card image-item"
+                    data-title="Fanpage 02"
+                    data-image="https://res.cloudinary.com/dcrmytq7y/image/upload/v1790001449/IMG_5448_avy4uj.png"
+                  >
+                    <img
+                      src="https://res.cloudinary.com/dcrmytq7y/image/upload/v1790001449/IMG_5448_avy4uj.png"
+                      alt="Fanpage 02"
+                      loading="lazy"
+                    />
+                  </button>
+                  <button
+                    class="media-card image-item"
+                    data-title="Fanpage 03"
+                    data-image="https://res.cloudinary.com/dcrmytq7y/image/upload/v1790001423/IMG_5445_vafzax.png"
+                  >
+                    <img
+                      src="https://res.cloudinary.com/dcrmytq7y/image/upload/v1790001423/IMG_5445_vafzax.png"
+                      alt="Fanpage 03"
+                      loading="lazy"
+                    />
+                  </button>
+                  <button
+                    class="media-card image-item"
+                    data-title="Fanpage 04"
+                    data-image="https://res.cloudinary.com/dcrmytq7y/image/upload/v1790001440/IMG_5447_et392k.png"
+                  >
+                    <img
+                      src="https://res.cloudinary.com/dcrmytq7y/image/upload/v1790001440/IMG_5447_et392k.png"
+                      alt="Fanpage 04"
+                      loading="lazy"
+                    />
+                  </button>
+                </div>
+                <button class="rail-btn next" type="button">›</button>
+              </div>
+            </section>
+
+            <section class="project-group website-gallery reveal">
+              <div class="project-group-head">
+                <div class="project-group-title">
+                  <div class="project-group-icon">05</div>
+                  <div>
+                    <h3>Landing Page & Website</h3>
+                    <p>Digital Experience</p>
+                  </div>
+                </div>
+              </div>
+              <div class="media-rail-wrap">
+                <button class="rail-btn prev" type="button">‹</button>
+                <div class="media-rail">
+                  <button
+                    class="media-card image-item"
+                    data-title="Landing Page 01"
+                    data-image="https://res.cloudinary.com/dcrmytq7y/image/upload/v1790001414/IMG_5454_zmjbdo.jpg"
+                  >
+                    <img
+                      src="https://res.cloudinary.com/dcrmytq7y/image/upload/v1790001414/IMG_5454_zmjbdo.jpg"
+                      alt="Landing Page 01"
+                      loading="lazy"
+                    />
+                  </button>
+                  <button
+                    class="media-card image-item"
+                    data-title="Landing Page 02"
+                    data-image="https://res.cloudinary.com/dcrmytq7y/image/upload/v1790001415/IMG_5451_otimcl.jpg"
+                  >
+                    <img
+                      src="https://res.cloudinary.com/dcrmytq7y/image/upload/v1790001415/IMG_5451_otimcl.jpg"
+                      alt="Landing Page 02"
+                      loading="lazy"
+                    />
+                  </button>
+                  <button
+                    class="media-card image-item"
+                    data-title="Landing Page 03"
+                    data-image="https://res.cloudinary.com/dcrmytq7y/image/upload/v1790001416/IMG_5453_dopbxx.jpg"
+                  >
+                    <img
+                      src="https://res.cloudinary.com/dcrmytq7y/image/upload/v1790001416/IMG_5453_dopbxx.jpg"
+                      alt="Landing Page 03"
+                      loading="lazy"
+                    />
+                  </button>
+                  <button
+                    class="media-card image-item"
+                    data-title="Landing Page 04"
+                    data-image="https://res.cloudinary.com/dcrmytq7y/image/upload/v1790001414/IMG_5449_b4t9ks.jpg"
+                  >
+                    <img
+                      src="https://res.cloudinary.com/dcrmytq7y/image/upload/v1790001414/IMG_5449_b4t9ks.jpg"
+                      alt="Landing Page 04"
+                      loading="lazy"
+                    />
+                  </button>
+                </div>
+                <button class="rail-btn next" type="button">›</button>
+              </div>
+            </section>
+          </div>
+        </div>
+      </section>
+
+      <div class="media-modal" id="imageModal" aria-hidden="true">
+        <div
+          class="media-modal-card"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="imageModalTitle"
+        >
+          <div class="media-modal-head">
+            <strong id="imageModalTitle">Hình ảnh dự án</strong
+            ><button
+              class="video-close"
+              id="imageClose"
+              type="button"
+              aria-label="Đóng ảnh"
+            >
+              ×
+            </button>
+          </div>
+          <div class="media-modal-body">
+            <img id="imageFull" src="" alt="" />
+          </div>
+        </div>
+      </div>
+
+      <section
+        class="panel"
+        id="legacyProjects"
+        data-scene="4"
+        style="display: none"
+      >
         <div class="container">
           <div class="section-head reveal">
             <div>
@@ -2060,6 +2832,7 @@
 
         videoModal.classList.add("open");
         videoModal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("viewer-open");
         document.body.style.overflow = "hidden";
       }
 
@@ -2067,6 +2840,7 @@
         videoModal.classList.remove("open");
         videoModal.setAttribute("aria-hidden", "true");
         videoFrame.innerHTML = "";
+        document.body.classList.remove("viewer-open");
         document.body.style.overflow = "";
       }
 
@@ -2084,6 +2858,111 @@
         if (e.key === "Escape" && videoModal.classList.contains("open")) {
           closeProjectVideo();
         }
+      });
+
+      // Project category tabs
+      document.querySelectorAll(".video-category").forEach((button) => {
+        button.addEventListener("click", () => {
+          const wasActive = button.classList.contains("active");
+          document
+            .querySelectorAll(".video-category")
+            .forEach((item) => item.classList.remove("active"));
+          document
+            .querySelectorAll(".video-library")
+            .forEach((item) => item.classList.remove("open"));
+          if (wasActive) return;
+          button.classList.add("active");
+          document
+            .querySelector(`[data-library="${button.dataset.category}"]`)
+            ?.classList.add("open");
+        });
+      });
+
+      // Horizontal galleries
+      document.querySelectorAll(".media-rail-wrap").forEach((wrap) => {
+        const rail = wrap.querySelector(".media-rail");
+        const cards = [...rail.querySelectorAll(".media-card")];
+        const progress = document.createElement("div");
+        progress.className = "rail-progress";
+        cards.forEach((_, index) => {
+          const dot = document.createElement("span");
+          if (index === 0) dot.classList.add("active");
+          progress.appendChild(dot);
+        });
+        wrap.appendChild(progress);
+        const updateProgress = () => {
+          if (!cards.length) return;
+          const index = Math.max(
+            0,
+            Math.min(
+              cards.length - 1,
+              Math.round(rail.scrollLeft / (cards[0].offsetWidth + 18)),
+            ),
+          );
+          [...progress.children].forEach((dot, dotIndex) =>
+            dot.classList.toggle("active", dotIndex === index),
+          );
+        };
+        wrap.querySelector(".prev")?.addEventListener("click", () =>
+          rail.scrollBy({
+            left: -rail.clientWidth * 0.78,
+            behavior: "smooth",
+          }),
+        );
+        wrap.querySelector(".next")?.addEventListener("click", () =>
+          rail.scrollBy({
+            left: rail.clientWidth * 0.78,
+            behavior: "smooth",
+          }),
+        );
+        rail.addEventListener("scroll", updateProgress, { passive: true });
+      });
+
+      // Full-screen image viewer
+      const imageModal = document.getElementById("imageModal"),
+        imageFull = document.getElementById("imageFull"),
+        imageClose = document.getElementById("imageClose"),
+        imageModalTitle = document.getElementById("imageModalTitle");
+
+      function closeProjectImage() {
+        imageModal.classList.remove("open");
+        imageModal.setAttribute("aria-hidden", "true");
+        imageFull.src = "";
+        document.body.classList.remove("viewer-open");
+        document.body.style.overflow = "";
+      }
+
+      document.querySelectorAll(".image-item").forEach((item) => {
+        item.addEventListener("click", () => {
+          imageModalTitle.textContent = item.dataset.title || "Hình ảnh dự án";
+          imageFull.src = item.dataset.image;
+          imageFull.alt = item.dataset.title || "Hình ảnh dự án";
+          imageModal.classList.add("open");
+          imageModal.setAttribute("aria-hidden", "false");
+          document.body.classList.add("viewer-open");
+          document.body.style.overflow = "hidden";
+        });
+      });
+      imageClose.addEventListener("click", closeProjectImage);
+      imageModal.addEventListener("click", (e) => {
+        if (e.target === imageModal) closeProjectImage();
+      });
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && imageModal.classList.contains("open"))
+          closeProjectImage();
+      });
+
+      // Keep cards tidy when an incomplete external link cannot load.
+      document.querySelectorAll(".media-card img").forEach((img) => {
+        img.addEventListener("error", () => {
+          img.style.display = "none";
+          img.parentElement.style.background =
+            "linear-gradient(135deg, rgba(124,92,255,.28), rgba(255,79,216,.15))";
+          img.parentElement.setAttribute(
+            "aria-label",
+            `${img.alt}: cần URL Cloudinary đầy đủ`,
+          );
+        });
       });
 
       // Prevent placeholder links from jumping to the top before real URLs are added.
