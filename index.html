@@ -1074,11 +1074,122 @@
         );
       }
 
+      /* ===== TWO MAIN PROJECT CATEGORIES ===== */
+      .project-main-categories {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+      .project-main-category {
+        min-height: 180px;
+        display: grid;
+        grid-template-columns: 1fr auto;
+        align-items: end;
+        gap: 18px;
+        padding: 24px;
+        border: 1px solid var(--line);
+        border-radius: 26px;
+        color: #fff;
+        background:
+          radial-gradient(
+            circle at 90% 10%,
+            rgba(124, 92, 255, 0.28),
+            transparent 38%
+          ),
+          rgba(255, 255, 255, 0.055);
+        text-align: left;
+        font: inherit;
+        cursor: pointer;
+        transition: 0.28s ease;
+      }
+      .project-main-category:hover,
+      .project-main-category.active {
+        transform: translateY(-5px);
+        border-color: rgba(255, 255, 255, 0.32);
+        background:
+          radial-gradient(
+            circle at 90% 10%,
+            rgba(255, 79, 216, 0.3),
+            transparent 42%
+          ),
+          rgba(124, 92, 255, 0.14);
+        box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
+      }
+      .project-main-category small {
+        display: block;
+        margin-bottom: 12px;
+        color: var(--cyan);
+        font-size: 10px;
+        font-weight: 900;
+        letter-spacing: 1.8px;
+        text-transform: uppercase;
+      }
+      .project-main-category strong {
+        display: block;
+        font-size: clamp(23px, 3vw, 34px);
+        line-height: 1.08;
+      }
+      .project-main-category span {
+        display: block;
+        margin-top: 9px;
+        color: var(--muted);
+        font-size: 12px;
+        font-weight: 700;
+      }
+      .project-main-arrow {
+        width: 48px;
+        height: 48px;
+        display: grid !important;
+        place-items: center;
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        border-radius: 50%;
+        color: #fff !important;
+        font-size: 22px !important;
+        transition: 0.25s ease;
+      }
+      .project-main-category.active .project-main-arrow {
+        transform: rotate(180deg);
+      }
+      .project-main-content {
+        min-width: 0;
+      }
+      .project-main-panel {
+        display: none;
+        min-width: 0;
+      }
+      .project-main-panel.open {
+        display: block;
+        animation: projectPanelOpen 0.35s ease both;
+      }
+      @keyframes projectPanelOpen {
+        from {
+          opacity: 0;
+          transform: translateY(-12px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .project-main-panel .project-group:first-child {
+        padding-top: 34px;
+      }
+      .project-main-panel[data-main-panel="video"] .project-group-head {
+        display: none;
+      }
+      .project-main-panel[data-main-panel="video"] .project-group {
+        padding-top: 34px;
+        border-bottom: 0;
+      }
+
+      .image-categories,
       .video-categories {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 12px;
       }
+      .image-category,
       .video-category {
         min-height: 138px;
         padding: 18px;
@@ -1095,6 +1206,8 @@
         cursor: pointer;
         transition: 0.25s;
       }
+      .image-category:hover,
+      .image-category.active,
       .video-category:hover,
       .video-category.active {
         transform: translateY(-4px);
@@ -1105,11 +1218,13 @@
           rgba(255, 79, 216, 0.16)
         );
       }
+      .image-category b,
       .video-category b {
         display: block;
         font-size: 15px;
         margin: 16px 0 6px;
       }
+      .image-category span,
       .video-category span {
         color: var(--muted);
         font-size: 11px;
@@ -1117,6 +1232,25 @@
       }
       .category-icon {
         font-size: 24px;
+      }
+      .image-category-content {
+        min-width: 0;
+      }
+      .image-library {
+        display: none;
+        min-width: 0;
+        margin-top: 14px;
+      }
+      .image-library.open {
+        display: block;
+        animation: listOpen 0.28s ease both;
+      }
+      .image-library > .project-group {
+        padding: 20px 0 0;
+        border-bottom: 0;
+      }
+      .image-library .project-group-head {
+        display: none;
       }
       .video-library {
         display: none;
@@ -1698,6 +1832,13 @@
         .video-modal {
           padding: 12px;
         }
+        .project-main-categories {
+          grid-template-columns: 1fr;
+        }
+        .project-main-category {
+          min-height: 145px;
+          padding: 20px;
+        }
         .media-rail {
           grid-auto-columns: 88%;
           gap: 12px;
@@ -1713,6 +1854,7 @@
         .social-gallery .media-card {
           /* aspect-ratio: 9 / 16; */
         }
+        .image-categories,
         .video-categories {
           grid-template-columns: repeat(2, 1fr);
         }
@@ -2159,7 +2301,6 @@
                     <p>Video Production</p>
                   </div>
                 </div>
-                <span class="project-count">09 VIDEO</span>
               </div>
               <div class="video-categories">
                 <button class="video-category" data-category="vj">
@@ -2860,7 +3001,83 @@
         }
       });
 
-      // Project category tabs
+      // Two project sections: 4 image/content categories and 4 video categories
+      const projectShowcase = document.querySelector(
+        "#projects .project-showcase",
+      );
+      if (projectShowcase) {
+        const originalGroups = [...projectShowcase.children].filter((item) =>
+          item.classList.contains("project-group"),
+        );
+        const videoGroup = originalGroups.find(
+          (item) => item.querySelector("h3")?.textContent.trim() === "Video",
+        );
+        const imageGroups = originalGroups.filter(
+          (item) => item !== videoGroup,
+        );
+
+        const imageSection = document.createElement("section");
+        imageSection.className =
+          "project-group image-project-section reveal show";
+        imageSection.innerHTML = `
+          <div class="project-group-head">
+            <div class="project-group-title">
+              <div class="project-group-icon">01</div>
+              <div><h3>Hình ảnh & Nội dung</h3><p>Creative & Digital Works</p></div>
+            </div>
+          </div>
+          <div class="image-categories">
+            <button class="image-category" type="button" data-image-category="plan" aria-expanded="false"><span class="category-icon">▦</span><b>Content Plan</b><span>01 nội dung</span></button>
+            <button class="image-category" type="button" data-image-category="social" aria-expanded="false"><span class="category-icon">↗</span><b>Social Traffic</b><span>06 hình ảnh</span></button>
+            <button class="image-category" type="button" data-image-category="fanpage" aria-expanded="false"><span class="category-icon">f</span><b>Fanpage</b><span>04 hình ảnh</span></button>
+            <button class="image-category" type="button" data-image-category="website" aria-expanded="false"><span class="category-icon">⌘</span><b>Landing Page / Website</b><span>04 hình ảnh</span></button>
+          </div>
+          <div class="image-category-content"></div>`;
+
+        const imageContent = imageSection.querySelector(
+          ".image-category-content",
+        );
+        const imageKeys = ["plan", "social", "fanpage", "website"];
+        imageGroups.forEach((group, index) => {
+          const panel = document.createElement("div");
+          panel.className = "image-library";
+          panel.dataset.imageLibrary = imageKeys[index];
+          panel.appendChild(group);
+          imageContent.appendChild(panel);
+        });
+
+        if (videoGroup) {
+          const videoNumber = videoGroup.querySelector(".project-group-icon");
+          if (videoNumber) videoNumber.textContent = "02";
+        }
+        projectShowcase.replaceChildren(imageSection, videoGroup);
+
+        imageSection.querySelectorAll(".image-category").forEach((button) => {
+          button.addEventListener("click", () => {
+            const target = button.dataset.imageCategory;
+            const targetPanel = imageContent.querySelector(
+              `[data-image-library="${target}"]`,
+            );
+            const wasOpen = button.classList.contains("active");
+
+            imageSection.querySelectorAll(".image-category").forEach((item) => {
+              item.classList.remove("active");
+              item.setAttribute("aria-expanded", "false");
+            });
+            imageContent
+              .querySelectorAll(".image-library")
+              .forEach((panel) => panel.classList.remove("open"));
+
+            if (!wasOpen) {
+              button.classList.add("active");
+              button.setAttribute("aria-expanded", "true");
+              targetPanel?.classList.add("open");
+            }
+          });
+        });
+      }
+
+      // Video subcategory tabs
       document.querySelectorAll(".video-category").forEach((button) => {
         button.addEventListener("click", () => {
           const wasActive = button.classList.contains("active");
